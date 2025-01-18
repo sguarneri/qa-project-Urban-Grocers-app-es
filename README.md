@@ -70,7 +70,7 @@ apiDoc Urban Grocers: https://cnt-a3275ede-6462-4c54-9944-ef9ff4997d94.container
 - Importación de librerías.
 - Importación de datos entre archivos.
 - Depuración de código.
-- Control de versiones con Git.
- - Clonar, Fusionar, Actualización, Extracción.
+- Control de versiones con Git (Clonar, Fusionar, Actualización, Extracción).
 - Navegación en ramificaciones Git.
 
+Gracias por leerme (:
