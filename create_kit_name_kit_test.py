@@ -17,6 +17,7 @@ def positive_assert(name):
     kit_response = sender_stand_request.post_new_client_kit(kit_body, auth_token)
 
     assert kit_response.status_code == 201
+    assert kit_response.json()["name"] == kit_body["name"]
 
 def negative_assert_code_400(name):
     kit_body = get_kit_body(name)
@@ -29,30 +30,28 @@ def negative_assert_code_400(name):
                                              "un espacio y un guión. De 2 a 15 caracteres"
 
 def test_create_kit_1_letter_in_name_get_success_response():
-    positive_assert("a")
+    positive_assert(data.one_letter)
 
 def test_create_kit_511_letter_in_name_get_success_response():
-    positive_assert("AbcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdAbcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabC")
+    positive_assert(data.five_hundred_eleven_letters)
 
 def test_create_kit_empty_name_get_error_response():
-    negative_assert_code_400("")
+    negative_assert_code_400(data.empty_name)
 
 def test_create_kit_512_letter_name_get_error_response():
-    negative_assert_code_400("AbcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdAbcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcD")
+    negative_assert_code_400(data.five_hundred_twelve_letters)
 
 def test_create_kit_has_special_symbols_in_name_get_success_response():
-    positive_assert("№%@,")
+    positive_assert(data.special_symbols)
 
-def test_create_kit_has_space_in_name_get_success_response():
-    positive_assert(" A Aaa ")
+def test_create_kit_has_spaces_in_name_get_success_response():
+    positive_assert(data.spaces_in_name)
 
 def test_create_kit_has_numbers_in_name_get_success_response():
-    positive_assert("123")
+    positive_assert(data.numbers_in_name)
 
 def test_create_kit_no_name_get_error_response():
-    kit_body = data.kit_body.copy()
-    kit_body.pop("name")
-    negative_assert_code_400(kit_body)
+    negative_assert_code_400(data.no_name)
 
 def test_create_kit_has_number_type_in_name_get_error_error():
-    negative_assert_code_400(123)
+    negative_assert_code_400(data.number_type_in_name)
